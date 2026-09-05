@@ -48,7 +48,7 @@ Quatre principes, issus du NIST SP 800-207 et du NIST SP 800-82 Rev. 3 :
 
 ## Architecture
 
-![Architecture globale](docs/images/01-architecture-globale.png)
+
 
 Quatre zones de confiance, chacune sur un réseau virtuel isolé, reliées par un pare-feu à cinq interfaces.
 
@@ -78,7 +78,7 @@ Les niveaux 1 et 2 partagent le même segment : c'est un écart assumé par rapp
 
 ## Politique de filtrage Zero Trust
 
-![Politique Zero Trust](docs/images/02-politique-zero-trust.png)
+
 
 | Source | Destination | Service | Action | Pourquoi |
 |---|---|---|---|---|
@@ -96,11 +96,11 @@ Les niveaux 1 et 2 partagent le même segment : c'est un écart assumé par rapp
 
 Les règles telles qu'enregistrées dans OPNsense :
 
-![Règles ZeroTrust_Principles](docs/images/06-opnsense-regles-zerotrust.png)
+
 
 Et la vérification que l'interface exposée n'accepte rien en entrée — *« No WAN rules have been defined. All incoming connections on this interface will be blocked. »* :
 
-![WAN deny by default](docs/images/05-opnsense-wan-deny.png)
+
 
 Détail complet et analyse chemin par chemin : [`docs/02-zero-trust-policy.md`](docs/02-zero-trust-policy.md).
 
@@ -124,7 +124,7 @@ Retirer une couche laisse un angle mort. C'est la définition même de la défen
 Capteur de niveau → OpenPLC (logique ST) → Modbus TCP :502 → FUXA (IHM) → opérateur
 ```
 
-![Synoptique FUXA](docs/images/12-fuxa-synoptique-editeur.png)
+
 
 ## Résultats de validation
 
@@ -136,7 +136,7 @@ Tests conduits depuis **Kali Linux (`192.168.10.50`)**, placée dans la zone IT 
 sudo nmap -Pn -p 502 --script modbus-discover 192.168.20.50
 ```
 
-![nmap Modbus](docs/images/18-nmap-modbus-filtered.png)
+
 
 Résultat : `502/tcp filtered mbap`, et le script `modbus-discover` **ne produit aucune sortie**.
 
@@ -146,7 +146,7 @@ Résultat : `502/tcp filtered mbap`, et le script `modbus-discover` **ne produit
 sudo nmap -Pn -sV -p 1881,8080,8443 192.168.20.60
 ```
 
-![nmap services](docs/images/19-nmap-services-filtered.png)
+
 
 Les trois ports sont `filtered`, et la colonne `VERSION` reste vide — aucune bannière n'a pu être collectée.
 
@@ -176,7 +176,7 @@ Un projet de sécurité qui ne publie que ses succès n'est pas un projet de sé
 
 ### 1. La VM DMZ contourne le pare-feu
 
-![Adressage DMZ](docs/images/09-adressage-dmz-dualhomed.png)
+
 
 La machine de la DMZ porte **deux interfaces actives** :
 
@@ -201,7 +201,7 @@ L'agent `001 — dmz` (`192.168.40.10`) est en état `disconnected`. Le SOC ne r
 
 ### 3. La détection est déployée mais non éprouvée
 
-![Suricata](docs/images/16-suricata-status.png)
+
 
 Suricata est actif, mais la ligne de commande observée est `suricata --af-packet -c /etc/suricata/suricata.yaml` : c'est une **capture passive, donc un fonctionnement en mode IDS**. Le mode IPS exigerait `copy-mode: ips` avec une paire d'interfaces appairées, ou une redirection vers `NFQUEUE`.
 
@@ -239,7 +239,7 @@ Déployer OPNsense avec **cinq cartes réseau** (VMnet8, 2, 3, 4, 5 dans cet ord
                              → WAN : DHCP
 ```
 
-![Interfaces OPNsense](docs/images/04-opnsense-interfaces.png)
+
 
 ### 3. Machines et composants
 
